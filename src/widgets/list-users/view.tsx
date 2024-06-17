@@ -4,6 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '~&/src/shared/ui/avatar';
 import type { IResponseUser } from '~&/src/shared/types/User.interface';
 import { Skeleton } from '~&/src/shared/ui/skeleton';
 import { cn } from '~&/src/shared/lib/utils';
+import Link from 'next/link';
 import React from 'react';
 
 const widthSkeleton = [
@@ -27,7 +28,7 @@ export function ListUsers({ data }: { data: IResponseUser[] | null }) {
                           i === 0 ? 'border-t border-input' : ''
                       )}
                   >
-                      <a
+                      <Link
                           href={`/account/${user.slug}`}
                           className="flex justify-between items-center gap-5"
                       >
@@ -47,7 +48,7 @@ export function ListUsers({ data }: { data: IResponseUser[] | null }) {
                                   {user.email}
                               </p>
                           </div>
-                      </a>
+                      </Link>
                   </li>
               ))
             : null;

@@ -5,6 +5,7 @@ import { ImageProfile } from '~&/src/features/image-profile';
 import { Button } from '~&/src/shared/ui/button';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export function Header() {
     const session = useSession();
@@ -13,7 +14,7 @@ export function Header() {
         <header className="w-full h-auto py-[14px] px-5 border-b border-input">
             <div className="flex w-auto h-full justify-between items-center">
                 <div className="flex gap-5 max-w-xs w-fit">
-                    <a href="/" className="shrink-0 w-fit h-fit">
+                    <Link href="/" className="shrink-0 w-fit h-fit">
                         <Image
                             src="/logo/main.png"
                             alt="logo-brand"
@@ -23,7 +24,7 @@ export function Header() {
                             height={50}
                             width={80}
                         />
-                    </a>
+                    </Link>
 
                     <p className="leading-[160%] sm:block hidden text-base font-normal tracking-normal">
                         Разрабатываем и запускаем сложные веб проекты
@@ -35,7 +36,7 @@ export function Header() {
                         <p className="text-base w-auto leading-[160%] font-normal">
                             {session?.data?.user.name}
                         </p>
-                        <a
+                        <Link
                             href={`/account/${session?.data?.user.slug}`}
                             className="w-full h-full"
                         >
@@ -47,7 +48,7 @@ export function Header() {
                                 }
                                 size="sm"
                             />
-                        </a>
+                        </Link>
                     </div>
                 ) : (
                     <Button
@@ -55,7 +56,7 @@ export function Header() {
                         variant="outline"
                         asChild
                     >
-                        <a href="/login">Войти</a>
+                        <Link href="/login">Войти</Link>
                     </Button>
                 )}
             </div>
