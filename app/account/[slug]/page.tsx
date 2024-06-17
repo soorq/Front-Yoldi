@@ -34,19 +34,7 @@ export async function generateMetadata({
             images: {
                 alt: `Аватар юзера - ${user.slug}`,
                 url: user?.cover?.url || '',
-                height: 50,
-                width: 50
-            }
-        },
-        twitter: {
-            card: 'summary',
-            title: user.name,
-            description: user.description,
-            images: {
-                alt: `Аватар юзера - ${user.slug}`,
-                url: user?.image?.url || '',
-                height: 50,
-                width: 50
+                height: 100
             }
         }
     };
