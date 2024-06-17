@@ -1,4 +1,4 @@
-import { TypeInferSignIn } from '~&/src/features/by-email/model/signin.schema';
+import type { TypeInferSignIn } from '~&/src/features/by-email/model/signin.schema';
 import type { IResponseUser, IUser } from '~&/src/shared/types/User.interface';
 import { IS_DEV, NEXTAUTH_SECRET } from '~&/src/shared/lib/enviroments';
 import CredentialsProvider from 'next-auth/providers/credentials';
@@ -6,6 +6,8 @@ import { RolesEnum } from '~&/src/shared/types/roles.enum';
 import type { NextAuthOptions } from 'next-auth';
 import { signIn } from '~&/src/app/api/auth.api';
 import axios from 'axios';
+
+console.log(NEXTAUTH_SECRET, IS_DEV);
 
 export const authOptions = {
     secret: NEXTAUTH_SECRET,

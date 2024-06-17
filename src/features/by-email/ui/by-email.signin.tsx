@@ -32,14 +32,13 @@ export function FormSingIn() {
         if (session?.data?.user?.slug) {
             redirect(`/account/${session?.data?.user?.slug}`);
         }
-    }, [session?.data?.user]);
+    }, [session?.data]);
 
     const handler: SubmitHandler<TypeInferSignIn> = async data => {
         try {
             await signIn('credentials', {
                 redirect: false,
-                email: data.email,
-                password: data.password
+                ...data
             });
 
             /**

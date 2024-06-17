@@ -11,7 +11,7 @@ import useSWR from 'swr';
 
 export default function Owner({ slug }: { slug: string }) {
     const { data: user } = useSWR<IResponseUser>(
-        `${API_URL}}/user/${slug}`,
+        `${API_URL}/user/${slug}`,
         fetcher,
         {
             revalidateOnMount: true,

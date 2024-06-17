@@ -10,7 +10,13 @@ import useSWR from 'swr';
 export default function RootPage() {
     const { data, error, isLoading } = useSWR<IUser[] | null>(
         `${API_URL}/user`,
-        fetcher
+        fetcher,
+        {
+            revalidateOnMount: true,
+            revalidateOnFocus: false,
+            revalidateOnReconnect: true,
+            refreshInterval: 10 * 60 * 60
+        }
     );
 
     return (
