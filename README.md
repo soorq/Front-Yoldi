@@ -114,7 +114,7 @@ This is a example for installation project and start in local
 
 Soorq - [@asoorq](https://telegram.com/assorq) - karpuhinlox12@gmail.com
 
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
+Project Link: [Ссылка на проект](https://github.com/soorq/Front-TestTask)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
