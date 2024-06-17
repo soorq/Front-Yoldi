@@ -47,10 +47,7 @@ export function CoverProfileDelete({
                 asChild
                 className="flex items-center border border-input bg-white py-[7px] px-[22px] relative gap-2.5 rounded-md"
             >
-                <Button
-                    className="font-medium leading-[160%] text-base h-auto border-none shadow-none"
-                    variant="secondary"
-                >
+                <Button className="font-medium leading-[160%] text-base h-auto border-none shadow-none">
                     <Trash size={18} />
                     Удалить
                     {/* eslint-disable-next-line jsx-a11y/alt-text */}

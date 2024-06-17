@@ -40,7 +40,6 @@ export function ImageProfileAdd() {
 
     const handler: SubmitHandler<TypeInferImageSchema> = async data => {
         try {
-            console.log(form.formState.errors);
             await UpdateImageProfile({
                 name: session?.data?.user?.name || '',
                 slug: session?.data?.user?.slug || '',
@@ -53,7 +52,6 @@ export function ImageProfileAdd() {
                 description: 'Ваше превью профиля успешно обновлено!'
             });
         } catch (e) {
-            console.log(e);
             const err: AxiosError = e as unknown as AxiosError;
             toast({
                 variant: 'destructive',

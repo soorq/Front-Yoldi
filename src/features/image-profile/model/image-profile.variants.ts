@@ -6,7 +6,7 @@ export const ImageProfileVariants = cva(
         variants: {
             size: {
                 sm: 'size-[50px] text-lg',
-                lg: 'size-[100px] relative group z-10'
+                lg: 'size-[100px] relative group z-10 text-4xl'
             }
         },
         defaultVariants: {
