@@ -2,35 +2,31 @@ import { ImageProfileVariants } from '~&/src/features/image-profile/model/image-
 import { ImageProfileDelete } from '~&/src/features/image-profile/ui/image-profile_delete';
 import { ImageProfileAdd } from '~&/src/features/image-profile/ui/image-profile_add';
 import { Avatar, AvatarFallback, AvatarImage } from '~&/src/shared/ui/avatar';
-import { type VariantProps } from 'class-variance-authority';
+import type { IResponseUser } from '~&/src/shared/types/User.interface';
+import type { VariantProps } from 'class-variance-authority';
+import { RolesEnum } from '~&/src/shared/types/roles.enum';
 import { cn } from '~&/src/shared/lib/utils';
-import { Session } from 'next-auth';
 
 export function ImageProfile({
     size,
-    session
+    user,
+    role = RolesEnum.GUEST
 }: {
-    session: Session | null;
+    user: IResponseUser | null;
+    role: RolesEnum | undefined;
     size: VariantProps<typeof ImageProfileVariants>['size'];
 }) {
-    const user = session?.user;
-
     return (
-        <Avatar
-            className={cn(
-                ImageProfileVariants({ size }),
-                'relative group z-10'
-            )}
-        >
+        <Avatar className={cn(ImageProfileVariants({ size }))}>
             <AvatarImage
                 className="object-cover aspect-square w-full"
                 src={user?.image?.url || ''}
                 alt={`image-profile_{${user?.image?.id}`}
             />
-            <AvatarFallback>{user?.name ? user?.name[0] : ''}</AvatarFallback>
+            <AvatarFallback>{user?.name ? user.name[0] : ''}</AvatarFallback>
 
-            {session?.role === 'owner' && size === 'lg' && (
-                <div className="group-hover:absolute group-hover:top-0 group-hover:left-0 w-full h-full flex justify-center items-center">
+            {size === 'lg' && role === 'owner' && (
+                <div className="absolute group-hover:top-0 group-hover:left-0 w-full h-full flex justify-center items-center">
                     {user?.image?.url ? (
                         <ImageProfileDelete />
                     ) : (

@@ -14,7 +14,7 @@ export const ImageProfileSchema = z.object({
         .instanceof(File)
         .refine(
             file => file.size < MAX_FILE_SIZE,
-            'Файл больше 5мб, попробуйте сжать и загрузить заново!'
+            'Файл больше 2мб, попробуйте сжать и загрузить заново!'
         )
         .refine(
             file => ACCEPTED_IMAGE_TYPES.includes(file.type),

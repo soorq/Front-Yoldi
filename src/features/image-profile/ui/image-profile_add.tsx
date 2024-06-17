@@ -4,7 +4,7 @@ import {
     type TypeInferImageSchema,
     ImageProfileSchema
 } from '~&/src/features/image-profile/model/image-profile.schema';
-import { Form, FormField, FormItem, FormLabel } from '~&/src/shared/ui/form';
+import { Form, FormField, FormItem, FormMessage } from '~&/src/shared/ui/form';
 import { UpdateImageProfile } from '~&/src/features/image-profile/api';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -40,11 +40,12 @@ export function ImageProfileAdd() {
 
     const handler: SubmitHandler<TypeInferImageSchema> = async data => {
         try {
-            await UpdateImageProfile(
-                data?.file,
-                session?.data?.user?.name || '',
-                session?.data?.user?.slug || ''
-            );
+            console.log(data);
+            await UpdateImageProfile({
+                name: session?.data?.user?.name || '',
+                slug: session?.data?.user?.slug || '',
+                file: data?.file
+            });
 
             toast({
                 variant: 'default',
@@ -56,7 +57,7 @@ export function ImageProfileAdd() {
             toast({
                 variant: 'destructive',
                 title: 'Ошибка!',
-                description: err.message
+                description: err.message || form.formState.errors.file?.message
             });
         } finally {
             await session.update();
@@ -91,6 +92,7 @@ export function ImageProfileAdd() {
                                     }}
                                 />
                             </div>
+                            <FormMessage />
                         </FormItem>
                     )}
                 />

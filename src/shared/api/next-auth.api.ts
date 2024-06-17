@@ -53,7 +53,7 @@ export const authOptions = {
                     return {
                         id: token,
                         ...user.data,
-                        role: RolesEnum.owner
+                        role: RolesEnum.OWNER
                     };
                 } catch (e) {
                     return null;

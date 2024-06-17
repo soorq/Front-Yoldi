@@ -1,7 +1,7 @@
 import AppProvider from '~&/src/app/providers/app.provider';
 import { APP_URL } from '~&/src/shared/lib/enviroments';
 import { Toaster } from '~&/src/shared/ui/toaster';
-import type { PropsWithChildren } from 'react';
+import { PropsWithChildren, Suspense } from 'react';
 import { Inter } from 'next/font/google';
 import type { Metadata } from 'next';
 import './globals.css';
@@ -18,6 +18,7 @@ export const metadata: Metadata = {
     alternates: {
         canonical: new URL(APP_URL || '')
     },
+    metadataBase: new URL(APP_URL || ''),
     openGraph: {
         type: 'profile',
         title: 'YoIDi',
@@ -32,7 +33,8 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: 'summary',
-        title: 'Персоналкин',
+        title: 'YoIDi',
+        description: 'Тестовое задание YoIDi',
         images: [
             {
                 url: '/meta/favicon-32x32.png',
@@ -48,7 +50,9 @@ export default function RootLayout({ children }: Readonly<PropsWithChildren>) {
     return (
         <html lang="en">
             <body className={_font.variable}>
-                <AppProvider>{children}</AppProvider>
+                <AppProvider>
+                    <Suspense fallback>{children}</Suspense>
+                </AppProvider>
                 <Toaster />
             </body>
         </html>

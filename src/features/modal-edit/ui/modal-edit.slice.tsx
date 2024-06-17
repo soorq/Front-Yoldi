@@ -29,7 +29,7 @@ export function ModalEditSlice({
             </DialogTrigger>
             <DialogContent className="p-[30px] max-w-[600px] w-full">
                 <DialogHeader>
-                    <DialogTitle className="text-3xl leading-[250%]">
+                    <DialogTitle className="text-3xl md:leading-[250%] text-left leading-normal mb-[25px]">
                         Редактировать профиль
                     </DialogTitle>
                     <ModalForm

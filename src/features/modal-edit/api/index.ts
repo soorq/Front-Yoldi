@@ -1,4 +1,4 @@
-import type { IResponseAuth } from '~&/src/features/by-email/model/IResponseAuth.interface';
+import type { IResponseAuth } from '~&/src/app/models/IResponseAuth.interface';
 import type { TypeUpdateTypeDto } from '~&/src/features/modal-edit/model/update-type.dto';
 import axios from 'axios';
 

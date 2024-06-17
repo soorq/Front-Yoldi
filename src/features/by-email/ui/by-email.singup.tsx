@@ -1,6 +1,5 @@
 'use client';
 
-import { FormControl, Form, FormField, FormItem } from '~&/src/shared/ui/form';
 import { Card, CardContent, CardHeader } from '~&/src/shared/ui/card';
 import { PasswordInput } from '~&/src/shared/ui/password-input';
 import { type SubmitHandler, useForm } from 'react-hook-form';
@@ -10,14 +9,24 @@ import {
 } from '~&/src/features/by-email/model/signup.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from '~&/src/shared/ui/use-toast';
-import { signUp } from '~&/src/app/api/auth.api';
 import { Button } from '~&/src/shared/ui/button';
+import { signUp } from '~&/src/app/api/auth.api';
 import { Lock, Mail, User } from 'lucide-react';
 import { Input } from '~&/src/shared/ui/input';
+import { useRouter } from 'next/navigation';
+import {
+    FormControl,
+    Form,
+    FormField,
+    FormItem,
+    FormMessage
+} from '~&/src/shared/ui/form';
 
 export function FormSingUp() {
+    const router = useRouter();
     const form = useForm<TypeInferSignUp>({
         resolver: zodResolver(FormSignUpSchema),
+        mode: 'onChange',
         defaultValues: {
             email: '',
             name: '',
@@ -27,17 +36,13 @@ export function FormSingUp() {
 
     const handler: SubmitHandler<TypeInferSignUp> = async data => {
         try {
-            await signUp(data);
-
-            toast({
-                variant: 'default',
-                title: 'Рады вас видеть!'
-            });
+            const res = await signUp(data);
+            if (res.message) throw new Error(res.message);
+            router.push('/login');
         } catch (error) {
-            const err = error as unknown as { message: string };
             toast({
                 variant: 'destructive',
-                title: `Попробуйте снова! ${err.message}`
+                title: `Попробуйте снова! ${error}`
             });
         }
     };
@@ -61,16 +66,22 @@ export function FormSingUp() {
                                 name="name"
                                 control={form.control}
                                 render={({ field }) => (
-                                    <FormItem className="flex gap-2.5 py-3 border-input border h-auto shadow-sm items-center space-0 rounded-md px-5">
-                                        <User className="shrink-0" size={20} />
-                                        <FormControl>
-                                            <Input
-                                                className="placeholder:text-base p-0 h-6 placeholder:leading-[25.6px] px-0.5 placeholder:font-normal"
-                                                placeholder="Имя"
-                                                {...field}
+                                    <div className="w-full h-auto">
+                                        <FormItem className="flex gap-2.5 py-3 border-input border h-auto shadow-sm items-center space-0 rounded-md px-5">
+                                            <User
+                                                className="shrink-0"
+                                                size={20}
                                             />
-                                        </FormControl>
-                                    </FormItem>
+                                            <FormControl>
+                                                <Input
+                                                    className="placeholder:text-base p-0 h-6 placeholder:leading-[25.6px] px-0.5 placeholder:font-normal"
+                                                    placeholder="Имя"
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                        </FormItem>
+                                        <FormMessage />
+                                    </div>
                                 )}
                             />
 
@@ -78,16 +89,22 @@ export function FormSingUp() {
                                 name="email"
                                 control={form.control}
                                 render={({ field }) => (
-                                    <FormItem className="flex gap-2.5 py-3 border-input border h-auto shadow-sm items-center space-0 rounded-md px-5">
-                                        <Mail className="shrink-0" size={20} />
-                                        <FormControl>
-                                            <Input
-                                                className="placeholder:text-base p-0 h-6 placeholder:leading-[25.6px] px-0.5 placeholder:font-normal"
-                                                placeholder="E-mail"
-                                                {...field}
+                                    <div className="w-full h-auto">
+                                        <FormItem className="flex gap-2.5 py-3 border-input border h-auto shadow-sm items-center space-0 rounded-md px-5">
+                                            <Mail
+                                                className="shrink-0"
+                                                size={20}
                                             />
-                                        </FormControl>
-                                    </FormItem>
+                                            <FormControl>
+                                                <Input
+                                                    className="placeholder:text-base p-0 h-6 placeholder:leading-[25.6px] px-0.5 placeholder:font-normal"
+                                                    placeholder="E-mail"
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                        </FormItem>
+                                        <FormMessage />
+                                    </div>
                                 )}
                             />
 
@@ -95,16 +112,22 @@ export function FormSingUp() {
                                 name="password"
                                 control={form.control}
                                 render={({ field }) => (
-                                    <FormItem className="flex gap-2.5 py-3 border-input border h-auto shadow-sm items-center space-0 rounded-md px-5">
-                                        <Lock className="shrink-0" size={20} />
-                                        <FormControl>
-                                            <PasswordInput
-                                                className="placeholder:text-base placeholder:pl-0.5 p-0 h-6 placeholder:leading-[25.6px] w-full px-0.5"
-                                                placeholder="Пароль"
-                                                {...field}
+                                    <div className="w-full h-auto">
+                                        <FormItem className="flex gap-2.5 py-3 border-input border h-auto shadow-sm items-center space-0 rounded-md px-5">
+                                            <Lock
+                                                className="shrink-0"
+                                                size={20}
                                             />
-                                        </FormControl>
-                                    </FormItem>
+                                            <FormControl>
+                                                <PasswordInput
+                                                    className="placeholder:text-base placeholder:pl-0.5 p-0 h-6 placeholder:leading-[25.6px] w-full px-0.5"
+                                                    placeholder="Пароль"
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                        </FormItem>
+                                        <FormMessage />
+                                    </div>
                                 )}
                             />
                         </div>

@@ -64,8 +64,8 @@ export function ModalForm({
                         name="name"
                         control={form.control}
                         render={({ field }) => (
-                            <FormItem>
-                                <FormLabel className="mb-[5px] text-muted-foreground leading-[160%]">
+                            <FormItem className="w-full h-auto">
+                                <FormLabel className="mb-[5px] text-muted-foreground leading-[160%] text-left block">
                                     Имя
                                 </FormLabel>
                                 <FormControl>
@@ -81,8 +81,8 @@ export function ModalForm({
                         name="url"
                         control={form.control}
                         render={({ field }) => (
-                            <FormItem>
-                                <FormLabel className="mb-[5px] text-muted-foreground leading-[160%]">
+                            <FormItem className="w-full h-auto">
+                                <FormLabel className="mb-[5px] text-muted-foreground leading-[160%] text-left w-full block">
                                     Адрес профиля
                                 </FormLabel>
                                 <FormControl>
@@ -103,14 +103,14 @@ export function ModalForm({
                         name="description"
                         control={form.control}
                         render={({ field }) => (
-                            <FormItem>
-                                <FormLabel className="mb-[5px] text-muted-foreground leading-[160%]">
+                            <FormItem className="w-full h-auto">
+                                <FormLabel className="mb-[5px] text-muted-foreground leading-[160%] text-left block">
                                     Описание
                                 </FormLabel>
                                 <FormControl>
                                     <Textarea
                                         {...field}
-                                        className="px-5 py-3 focus-visible:outline-0 min-h-32"
+                                        className="px-5 py-3 focus-visible:outline-0 md:min-h-[150px] min-h-[225px]"
                                     />
                                 </FormControl>
                             </FormItem>

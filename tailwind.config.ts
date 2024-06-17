@@ -1,5 +1,30 @@
+import type { PluginAPI } from 'tailwindcss/types/config';
 import defaultTheme from 'tailwindcss/defaultTheme';
-import type { Config } from 'tailwindcss';
+import { type Config } from 'tailwindcss';
+import plugin from 'tailwindcss/plugin';
+
+const PliginAnimationDelay = plugin(
+    ({
+        matchUtilities,
+        theme
+    }: {
+        matchUtilities: PluginAPI['matchUtilities'];
+        theme: PluginAPI['theme'];
+    }) => {
+        matchUtilities(
+            {
+                'animation-delay': (value: string) => {
+                    return {
+                        'animation-delay': value
+                    };
+                }
+            },
+            {
+                values: theme('transitionDelay')
+            }
+        );
+    }
+);
 
 const config = {
     darkMode: ['class'],
@@ -70,6 +95,14 @@ const config = {
                 'accordion-up': {
                     from: { height: 'var(--radix-accordion-content-height)' },
                     to: { height: '0' }
+                },
+                loading: {
+                    '0%, 40%, 100%': {
+                        transform: 'scaleY(0.05)'
+                    },
+                    '20%': {
+                        transform: 'scaleY(2.5)'
+                    }
                 }
             },
             animation: {
@@ -78,7 +111,11 @@ const config = {
             }
         }
     },
-    plugins: [require('tailwindcss-animate')]
+    plugins: [
+        require('tailwindcss-animate'),
+        PliginAnimationDelay,
+        require('autoprefixer')
+    ]
 } satisfies Config;
 
 export default config;

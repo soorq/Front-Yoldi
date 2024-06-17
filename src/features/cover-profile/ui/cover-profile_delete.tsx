@@ -23,7 +23,7 @@ export function CoverProfileDelete({
 
     const handler = async () => {
         try {
-            await DeleteCoverProfile(name, slug);
+            await DeleteCoverProfile({ name, slug });
             toast({
                 variant: 'default',
                 title: 'Успешно обновлено!',

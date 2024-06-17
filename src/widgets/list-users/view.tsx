@@ -1,20 +1,22 @@
 'use client';
 
 import { Avatar, AvatarFallback, AvatarImage } from '~&/src/shared/ui/avatar';
-import type { IUser } from '~&/src/shared/types/User.interface';
+import type { IResponseUser } from '~&/src/shared/types/User.interface';
 import { Skeleton } from '~&/src/shared/ui/skeleton';
 import { cn } from '~&/src/shared/lib/utils';
 import React from 'react';
 
-const widthSkeleton = ['w-1/6', 'w-2/6', 'w-1/5', 'w-2/12', 'w-1/4', 'w-1/5'];
+const widthSkeleton = [
+    'w-1/6',
+    'w-2/6',
+    'w-1/5',
+    'w-2/12',
+    'w-1/5',
+    'w-1/12',
+    'w-3/12'
+];
 
-export function ListUsers({
-    data,
-    isLoading
-}: {
-    data: IUser[] | null;
-    isLoading: boolean;
-}) {
+export function ListUsers({ data }: { data: IResponseUser[] | null }) {
     const memoizedData = React.useMemo(() => {
         return data
             ? data.map((user, i) => (
@@ -57,7 +59,7 @@ export function ListUsers({
                 Список аккаунтов
             </h1>
 
-            {isLoading ? (
+            {!data ? (
                 <div className="flex flex-col w-full h-full overflow-y-auto gap-5 max-h-[500px] pt-2.5">
                     {Array(7)
                         .fill(0)
@@ -73,13 +75,13 @@ export function ListUsers({
                                 <div className="w-full flex flex-col md:flex-row justify-between items-start h-auto md:items-center">
                                     <Skeleton
                                         className={cn(
-                                            `${widthSkeleton[Math.floor(Math.random() * 4)]} bg-primary h-5`
+                                            `${widthSkeleton[i % 2 === 1 ? 1 : i]} bg-primary h-5`
                                         )}
                                         key={`skeleton-name-${i}-1`}
                                     />
                                     <Skeleton
                                         className={cn(
-                                            `${widthSkeleton[Math.floor(Math.random() * 4)]} bg-primary h-5`
+                                            `${widthSkeleton[i % 2 === 0 ? 0 : i]} bg-primary h-5`
                                         )}
                                         key={`skeleton-email-${i}-2`}
                                     />
@@ -88,11 +90,9 @@ export function ListUsers({
                         ))}
                 </div>
             ) : (
-                data && (
-                    <ul className="divide-y divide-input max-h-[500px] h-full overflow-y-auto">
-                        {memoizedData}
-                    </ul>
-                )
+                <ul className="divide-y divide-input max-h-[500px] h-full overflow-y-auto">
+                    {memoizedData}
+                </ul>
             )}
         </section>
     );

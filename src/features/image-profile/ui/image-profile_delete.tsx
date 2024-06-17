@@ -22,10 +22,10 @@ export function ImageProfileDelete() {
 
     const handler = async () => {
         try {
-            await DeleteImageProfile(
-                session?.data?.user.name || '',
-                session?.data?.user.slug || ''
-            );
+            await DeleteImageProfile({
+                name: session?.data?.user.name || '',
+                slug: session?.data?.user.slug || ''
+            });
 
             toast({
                 variant: 'default',

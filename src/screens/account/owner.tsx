@@ -1,13 +1,28 @@
 'use client';
 
-import { Banner } from '~&/src/features/cover-profile/ui/cover-profile.slice';
 import type { IResponseUser } from '~&/src/shared/types/User.interface';
 import { fetcher } from '~&/src/shared/api/fetcher.api';
 import { API_URL } from '~&/src/shared/lib/enviroments';
-import { ViewerUser } from '~&/src/entities/viewer';
+import { Skeleton } from '~&/src/shared/ui/skeleton';
 import { Header } from '~&/src/widgets/header';
+import dynamic from 'next/dynamic';
 import React from 'react';
 import useSWR from 'swr';
+
+const Banner = dynamic(
+    () => import('~&/src/features/cover-profile').then(cn => cn.Banner),
+    {
+        loading: () => (
+            <Skeleton className="w-full max-h-[200px] h-full bg-primary rounded-none" />
+        ),
+        ssr: false
+    }
+);
+
+const ViewerUser = dynamic(
+    () => import('~&/src/entities/viewer').then(cn => cn.ViewerUser),
+    { ssr: false }
+);
 
 export default function Owner({ slug }: { slug: string }) {
     const { data: user } = useSWR<IResponseUser>(

@@ -1,6 +1,7 @@
 'use client';
 
-import { Avatar, AvatarImage, AvatarFallback } from '~&/src/shared/ui/avatar';
+import type { IResponseUser } from '~&/src/shared/types/User.interface';
+import { ImageProfile } from '~&/src/features/image-profile';
 import { Button } from '~&/src/shared/ui/button';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
@@ -10,8 +11,8 @@ export function Header() {
 
     return (
         <header className="w-full h-auto py-[14px] px-5 border-b border-input">
-            <div className="flex w-full h-full justify-between items-center">
-                <div className="flex gap-5 max-w-xs w-full">
+            <div className="flex w-auto h-full justify-between items-center">
+                <div className="flex gap-5 max-w-xs w-fit">
                     <a href="/" className="shrink-0 w-fit h-fit">
                         <Image
                             src="/logo/main.png"
@@ -30,25 +31,22 @@ export function Header() {
                 </div>
 
                 {session?.data?.user ? (
-                    <div className="shrink-0 w-auto flex items-center gap-5">
-                        <p className="text-base leading-[160%] font-normal">
+                    <div className="flex items-center gap-5 shrink-0">
+                        <p className="text-base w-auto leading-[160%] font-normal">
                             {session?.data?.user.name}
                         </p>
-                        <a href={`/account/${session?.data?.user.slug}`}>
-                            <Avatar className="shrink-0 max-h-[50px] max-w-[50px]">
-                                <AvatarImage
-                                    src={
-                                        session?.data?.user?.image
-                                            ? session?.data?.user?.image?.url
-                                            : ''
-                                    }
-                                />
-                                <AvatarFallback className="text-lg font-normal leading-[160%]">
-                                    {session?.data?.user?.name
-                                        ? session?.data?.user.name[0]
-                                        : ''}
-                                </AvatarFallback>
-                            </Avatar>
+                        <a
+                            href={`/account/${session?.data?.user.slug}`}
+                            className="w-full h-full"
+                        >
+                            <ImageProfile
+                                role={session?.data?.role}
+                                user={
+                                    (session?.data?.user as IResponseUser) ||
+                                    null
+                                }
+                                size="sm"
+                            />
                         </a>
                     </div>
                 ) : (

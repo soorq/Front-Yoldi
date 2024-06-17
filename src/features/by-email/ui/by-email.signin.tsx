@@ -1,6 +1,12 @@
 'use client';
 
-import { FormControl, Form, FormField, FormItem } from '~&/src/shared/ui/form';
+import {
+    FormControl,
+    Form,
+    FormField,
+    FormItem,
+    FormMessage
+} from '~&/src/shared/ui/form';
 import { Card, CardContent, CardHeader } from '~&/src/shared/ui/card';
 import { PasswordInput } from '~&/src/shared/ui/password-input';
 import { type SubmitHandler, useForm } from 'react-hook-form';
@@ -95,6 +101,7 @@ export function FormSingIn() {
                                                 {...field}
                                             />
                                         </FormControl>
+                                        <FormMessage />
                                     </FormItem>
                                 )}
                             />
@@ -112,6 +119,7 @@ export function FormSingIn() {
                                                 {...field}
                                             />
                                         </FormControl>
+                                        <FormMessage />
                                     </FormItem>
                                 )}
                             />

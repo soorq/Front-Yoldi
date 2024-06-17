@@ -1,11 +1,15 @@
 import { APP_URL } from '~&/src/shared/lib/enviroments';
 import axios from 'axios';
 
-export async function UpdateCoverProfile(
-    file: File | null,
-    name: string,
-    slug: string
-) {
+export async function UpdateCoverProfile({
+    name,
+    slug,
+    file
+}: {
+    file: File | null;
+    name: string;
+    slug: string;
+}) {
     try {
         const formData = new FormData();
         formData.append('file', file || '');
@@ -27,7 +31,13 @@ export async function UpdateCoverProfile(
     }
 }
 
-export async function DeleteCoverProfile(name: string, slug: string) {
+export async function DeleteCoverProfile({
+    name,
+    slug
+}: {
+    name: string;
+    slug: string;
+}) {
     try {
         const update = await axios.patch(`${APP_URL}/api/edit`, {
             coverId: null,

@@ -43,7 +43,11 @@ export function CoverProfileAdd({
 
     const handler: SubmitHandler<TypeInferCoverSchema> = async data => {
         try {
-            await UpdateCoverProfile(data?.file, name, slug);
+            await UpdateCoverProfile({
+                file: data?.file,
+                name,
+                slug
+            });
 
             toast({
                 variant: 'default',

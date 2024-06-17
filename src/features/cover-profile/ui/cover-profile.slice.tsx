@@ -3,8 +3,8 @@
 import { CoverProfileDelete } from '~&/src/features/cover-profile/ui/cover-profile_delete';
 import { CoverProfileAdd } from '~&/src/features/cover-profile/ui/cover-profile_add';
 import type { IResponseUser } from '~&/src/shared/types/User.interface';
-import { ImageLoader } from '~&/src/shared/ui/image-loader';
 import { useSession } from 'next-auth/react';
+import Image from 'next/image';
 
 export function Banner({
     image,
@@ -19,8 +19,9 @@ export function Banner({
         <section className="w-full h-full max-h-[200px] border-b border-input">
             <div className="w-full h-full relative group">
                 {image?.url && (
-                    <ImageLoader
+                    <Image
                         alt={`CoverProfile-${image?.id}`}
+                        className="object-cover aspect-video"
                         loading="lazy"
                         sizes="100%"
                         src={image?.url}

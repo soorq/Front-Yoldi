@@ -25,10 +25,14 @@ export function ViewerUser({ user }: { user: IResponseUser | null }) {
     const session = useSession();
 
     return (
-        <section className="w-full h-full bg-white">
-            <div className="max-w-[860px] mx-auto px-[30px] w-full h-full">
-                <div className="mb-[35px] w-auto h-auto relative -top-[50px]">
-                    <ImageProfile session={session?.data} size="lg" />
+        <section className="w-full h-svh bg-white">
+            <div className="max-w-[860px] relative -top-[50px] mx-auto px-[30px] w-full h-full">
+                <div className="w-auto h-auto mb-[35px]">
+                    <ImageProfile
+                        user={user}
+                        role={session?.data?.role}
+                        size="lg"
+                    />
                 </div>
 
                 <div className="flex w-full mb-[30px] md:justify-between md:items-baseline flex-col md:flex-row">

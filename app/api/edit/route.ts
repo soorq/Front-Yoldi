@@ -6,7 +6,7 @@ import { getServerSession } from 'next-auth';
 
 export const dynamic = 'force-dynamic';
 
-export async function PATCH(req: NextRequest) {
+async function handler(req: NextRequest) {
     try {
         // Получаем токен, который производит аунтефикацию юзера на бэке
         const session = await getServerSession(authOptions);
@@ -34,3 +34,5 @@ export async function PATCH(req: NextRequest) {
         );
     }
 }
+
+export { handler as PATCH };
