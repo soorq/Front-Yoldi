@@ -1,4 +1,4 @@
-import RootPage from '~&/src/pages/root';
+import RootPage from '~&/src/screens/root';
 
 export default function Home() {
     return <RootPage />;

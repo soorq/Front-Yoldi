@@ -9,8 +9,8 @@ import {
     type TypeInferSignUp
 } from '~&/src/features/by-email/model/signup.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { signUp } from '~&/src/features/by-email/api';
 import { toast } from '~&/src/shared/ui/use-toast';
+import { signUp } from '~&/src/app/api/auth.api';
 import { Button } from '~&/src/shared/ui/button';
 import { Lock, Mail, User } from 'lucide-react';
 import { Input } from '~&/src/shared/ui/input';

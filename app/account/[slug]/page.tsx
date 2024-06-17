@@ -1,5 +1,5 @@
 import type { IResponseUser } from '~&/src/shared/types/User.interface';
-import { default as Page } from '~&/src/pages/account/owner';
+import { default as Page } from '~&/src/screens/account/owner';
 import { API_URL } from '~&/src/shared/lib/enviroments';
 
 export async function generateStaticParams() {

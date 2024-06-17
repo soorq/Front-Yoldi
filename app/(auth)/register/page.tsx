@@ -1,4 +1,4 @@
-import SignUp from '~&/src/pages/auth/sign-up';
+import SignUp from '~&/src/screens/auth/sign-up';
 
 export default function RegisterPage() {
     return <SignUp />;
