@@ -25,7 +25,7 @@ export function ViewerUser({ user }: { user: IResponseUser | null }) {
     const session = useSession();
 
     return (
-        <section className="w-full h-svh bg-white">
+        <section className="w-full h-[79svh] bg-white">
             <div className="max-w-[860px] relative -top-[50px] mx-auto px-[30px] w-full h-full">
                 <div className="w-auto h-auto mb-[35px]">
                     <ImageProfile

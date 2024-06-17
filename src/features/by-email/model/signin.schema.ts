@@ -3,7 +3,7 @@ import { z } from 'zod';
 export const FormSignInSchema = z.object({
     email: z
         .string()
-        .email('Не корректный e-mail адресс!')
+        .email('Некорректный e-mail адресс!')
         .nonempty({ message: 'Это поле обязательно!' }),
     password: z
         .string()

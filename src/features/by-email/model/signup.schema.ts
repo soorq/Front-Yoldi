@@ -3,7 +3,7 @@ import { z } from 'zod';
 export const FormSignUpSchema = z.object({
     email: z
         .string()
-        .email('Не корректный e-mail адресс!')
+        .email('Некорректный e-mail адрес!')
         .nonempty('Это поле обязательное!'),
     name: z
         .string()
