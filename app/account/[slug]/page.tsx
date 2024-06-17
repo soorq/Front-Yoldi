@@ -29,7 +29,7 @@ export async function generateMetadata({
         description: `${user?.description || ''}`,
         metadataBase: new URL(APP_URL || ''),
         twitter: {
-            card: 'summary',
+            card: 'summary_large_image',
             title: user.name,
             description: user.description,
             images: {
