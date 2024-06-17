@@ -1,5 +1,5 @@
 import type { TypeInferSignIn } from '~&/src/features/by-email/model/signin.schema';
-import type { IResponseUser, IUser } from '~&/src/shared/types/User.interface';
+import type { IResponseUser } from '~&/src/shared/types/User.interface';
 import { IS_DEV, NEXTAUTH_SECRET } from '~&/src/shared/lib/enviroments';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { RolesEnum } from '~&/src/shared/types/roles.enum';
@@ -64,8 +64,9 @@ export const authOptions = {
     callbacks: {
         async jwt({ user, token }) {
             if (user) {
-                token.user = user as IUser;
                 token._api_key = user.id;
+                token.role = user.role as RolesEnum;
+                token.user = user as IResponseUser;
             }
 
             return token;
@@ -73,7 +74,7 @@ export const authOptions = {
         async session({ session, token }) {
             if (session) {
                 session._api_key = token._api_key;
-                session.role = token.user.role;
+                session.role = token.role;
                 session.user = token.user;
             }
             return session;

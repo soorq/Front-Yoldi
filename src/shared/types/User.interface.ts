@@ -18,7 +18,3 @@ export interface IResponseUser {
         height?: string;
     } | null;
 }
-
-export interface IUser extends IResponseUser {
-    role: RolesEnum;
-}
