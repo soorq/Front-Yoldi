@@ -28,8 +28,18 @@ export async function generateMetadata({
         title: `Профиль юзера ${user.name}`,
         description: `${user?.description || ''}`,
         metadataBase: new URL(APP_URL || ''),
+        openGraph: {
+            title: user.name,
+            description: user.description,
+            images: {
+                alt: `Аватар юзера - ${user.slug}`,
+                url: user?.cover?.url || '',
+                height: 50,
+                width: 50
+            }
+        },
         twitter: {
-            card: 'summary_large_image',
+            card: 'summary',
             title: user.name,
             description: user.description,
             images: {
