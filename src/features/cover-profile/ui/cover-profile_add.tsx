@@ -87,6 +87,7 @@ export function CoverProfileAdd({
                                         );
                                     }}
                                 />
+                                {/* eslint-disable-next-line jsx-a11y/alt-text */}
                                 <Image size={20} />
                             </div>
                         </FormItem>

@@ -16,9 +16,11 @@ export function Header() {
                         <Image
                             src="/logo/main.png"
                             alt="logo-brand"
-                            width={80}
-                            height={50}
+                            loading="eager"
+                            rel="preload"
                             sizes="100%"
+                            height={50}
+                            width={80}
                         />
                     </a>
 

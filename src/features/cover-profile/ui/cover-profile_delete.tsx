@@ -53,6 +53,7 @@ export function CoverProfileDelete({
                 >
                     <Trash size={18} />
                     Удалить
+                    {/* eslint-disable-next-line jsx-a11y/alt-text */}
                     <Image size={20} />
                 </Button>
             </DialogTrigger>

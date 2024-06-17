@@ -7,8 +7,6 @@ import type { NextAuthOptions } from 'next-auth';
 import { signIn } from '~&/src/app/api/auth.api';
 import axios from 'axios';
 
-console.log(NEXTAUTH_SECRET, IS_DEV);
-
 export const authOptions = {
     secret: NEXTAUTH_SECRET,
     session: {
