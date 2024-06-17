@@ -42,11 +42,11 @@ export function FormSingIn() {
 
     const handler: SubmitHandler<TypeInferSignIn> = async data => {
         try {
-            await signIn('credentials', {
+            const res = await signIn('credentials', {
                 redirect: false,
                 ...data
             });
-
+            if (res?.error) throw new Error('Не верная почта или пароль!');
             /**
              * Вызываем toast (Уведомление),
              * чтоб сообщить юзеру об успешном входе

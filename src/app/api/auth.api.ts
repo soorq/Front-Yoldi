@@ -30,11 +30,7 @@ export async function signUp(data: TypeInferSignUp) {
             .post(`${APP_URL}/api/register`, data)
             .then(res => res.data);
 
-        console.log(res);
-
         if (!res?.value) return Promise.reject(Error(res.data.message));
-
-        console.log(res.value);
 
         return res.value;
     } catch (e) {

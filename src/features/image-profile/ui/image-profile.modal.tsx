@@ -26,7 +26,7 @@ export function ImageProfileModal({
                     <Button
                         type="submit"
                         className="w-full"
-                        form="cover-profile-form"
+                        form="image-profile-form"
                         onClick={() => onOpenChange(false)}
                     >
                         Подтвердить

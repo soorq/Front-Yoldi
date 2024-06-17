@@ -6,7 +6,7 @@ export default function SignIn() {
     return (
         <div className="flex flex-col w-full h-svh">
             <Header />
-            <main className="w-full h-full flex-grow bg-[#f3f3f3]">
+            <main className="w-full h-full flex-grow bg-background-secondary">
                 <section className="w-full h-full justify-center items-center flex">
                     <FormSingIn />
                 </section>

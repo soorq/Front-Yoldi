@@ -16,7 +16,7 @@ export function Banner({
     const session = useSession();
 
     return (
-        <section className="w-full h-full max-h-[200px] border-b border-input">
+        <section className="w-full h-full max-h-[200px] border-b bg-background-secondary border-stroke-secondary">
             <div className="w-full h-full relative group">
                 {image?.url && (
                     <Image

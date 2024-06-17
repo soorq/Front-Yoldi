@@ -51,8 +51,14 @@ const config = {
                 border: 'hsl(var(--border))',
                 input: 'hsl(var(--input))',
                 ring: 'hsl(var(--ring))',
-                background: 'hsl(var(--background))',
-                foreground: 'hsl(var(--foreground))',
+                background: {
+                    DEFAULT: 'hsl(var(--background))',
+                    secondary: 'hsl(var(--background-secondary))'
+                },
+                stroke: {
+                    DEFAULT: 'hsl(var(--stroke))',
+                    secondary: 'hsl(var(--stroke-secondary))'
+                },
                 primary: {
                     DEFAULT: 'hsl(var(--primary))',
                     foreground: 'hsl(var(--primary-foreground))'
@@ -62,8 +68,7 @@ const config = {
                     foreground: 'hsl(var(--secondary-foreground))'
                 },
                 destructive: {
-                    DEFAULT: 'hsl(var(--destructive))',
-                    foreground: 'hsl(var(--destructive-foreground))'
+                    DEFAULT: 'hsl(var(--destructive))'
                 },
                 muted: {
                     DEFAULT: 'hsl(var(--muted))',
@@ -72,10 +77,6 @@ const config = {
                 accent: {
                     DEFAULT: 'hsl(var(--accent))',
                     foreground: 'hsl(var(--accent-foreground))'
-                },
-                popover: {
-                    DEFAULT: 'hsl(var(--popover))',
-                    foreground: 'hsl(var(--popover-foreground))'
                 },
                 card: {
                     DEFAULT: 'hsl(var(--card))',

@@ -6,6 +6,7 @@ import type { Metadata } from 'next';
 export async function generateStaticParams() {
     const users = (await fetch(`${API_URL}/user`, {
         next: { revalidate: 10 * 60 * 60 },
+        cache: 'no-cache',
         method: 'GET'
     }).then(res => res.json())) as IResponseUser[];
 
@@ -21,6 +22,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
     const user = (await fetch(`${API_URL}/user/${params.slug}`, {
         next: { revalidate: 10 * 60 * 60 },
+        cache: 'no-cache',
         method: 'GET'
     }).then(res => res.json())) as IResponseUser;
 
@@ -34,7 +36,7 @@ export async function generateMetadata({
             description: user.description,
             images: {
                 alt: `Аватар юзера - ${user.slug}`,
-                url: user.image?.url || '',
+                url: user?.image?.url || '',
                 height: 50,
                 width: 50
             }

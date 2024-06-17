@@ -10,7 +10,7 @@ export default async function AppProvider({ children }: PropsWithChildren) {
     return (
         <NextauthProvider session={session}>
             <SwrProvider>{children}</SwrProvider>
-            <NextTopLoader color="#aacaac" height={2.5} showSpinner={false} />
+            <NextTopLoader color="#000000" height={2.5} showSpinner={false} />
         </NextauthProvider>
     );
 }
