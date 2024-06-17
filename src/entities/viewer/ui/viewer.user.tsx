@@ -36,7 +36,7 @@ export function ViewerUser({ user }: { user: IResponseUser | null }) {
                 </div>
 
                 <div className="flex w-full mb-[30px] md:justify-between md:items-baseline flex-col md:flex-row">
-                    <div className="flex flex-col gap-2.5">
+                    <div className="flex flex-col gap-2.5 mb-2.5">
                         <h2 className="font-medium text-3xl">
                             {user?.name || ''}
                         </h2>
@@ -57,7 +57,7 @@ export function ViewerUser({ user }: { user: IResponseUser | null }) {
                 </div>
 
                 <div className="max-w-[600px] w-full h-auto">
-                    <div className="mb-12">
+                    <div className="mb-[60px]">
                         <p className="text-base leading-[160%]">
                             {user?.description || ''}
                         </p>
