@@ -1,6 +1,7 @@
-import { RolesEnum } from '~&/src/shared/types/roles.enum';
+import type { RolesEnum } from '~&/src/shared/types/roles.enum';
 
 export interface IResponseUser {
+    id: string;
     name: string;
     email: string;
     slug: string;
@@ -17,4 +18,5 @@ export interface IResponseUser {
         width?: string;
         height?: string;
     } | null;
+    role: RolesEnum;
 }

@@ -1,11 +1,10 @@
-'use client';
-
 import type { IResponseUser } from '~&/src/shared/types/User.interface';
 import { ImageProfile } from '~&/src/features/image-profile';
-import { signOut, useSession } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 import { Skeleton } from '~&/src/shared/ui/skeleton';
 import { Button } from '~&/src/shared/ui/button';
 import { LogOut } from 'lucide-react';
+import type { User } from 'next-auth';
 import dynamic from 'next/dynamic';
 import React from 'react';
 
@@ -20,19 +19,12 @@ const ModalEditButton = dynamic(
     }
 );
 
-export function ViewerUser({ user }: { user: IResponseUser | null }) {
-    const [open, setOpen] = React.useState(false);
-    const session = useSession();
-
+export function ViewerUser({ user }: { user: IResponseUser | User }) {
     return (
         <section className="w-full h-[79svh] bg-white">
             <div className="max-w-[860px] relative -top-[50px] mx-auto px-[30px] w-full h-full">
                 <div className="w-auto h-auto mb-[35px]">
-                    <ImageProfile
-                        user={user}
-                        role={session?.data?.role}
-                        size="lg"
-                    />
+                    <ImageProfile user={user} size="lg" />
                 </div>
 
                 <div className="flex w-full mb-[30px] md:justify-between md:items-baseline flex-col md:flex-row">
@@ -46,14 +38,7 @@ export function ViewerUser({ user }: { user: IResponseUser | null }) {
                         </p>
                     </div>
 
-                    {session?.data?.user &&
-                        user?.slug === session?.data?.user?.slug &&
-                        session?.data?.role === 'owner' && (
-                            <ModalEditButton
-                                onSwitchOpen={setOpen}
-                                isOpen={open}
-                            />
-                        )}
+                    {user && user?.role === 'owner' && <ModalEditButton />}
                 </div>
 
                 <div className="max-w-[600px] w-full h-auto">
@@ -63,18 +48,16 @@ export function ViewerUser({ user }: { user: IResponseUser | null }) {
                         </p>
                     </div>
 
-                    {session?.data?.user &&
-                        session?.data?.role === 'owner' &&
-                        user?.slug === session?.data?.user?.slug && (
-                            <Button
-                                className="text-base leading-[160%] py-[7px] gap-2.5 px-[22px]"
-                                variant={'outline'}
-                                onClick={() => signOut()}
-                            >
-                                <LogOut size={18} />
-                                Выйти
-                            </Button>
-                        )}
+                    {user && user?.role === 'owner' && (
+                        <Button
+                            className="text-base leading-[160%] py-[7px] gap-2.5 px-[22px]"
+                            variant={'outline'}
+                            onClick={() => signOut()}
+                        >
+                            <LogOut size={18} />
+                            Выйти
+                        </Button>
+                    )}
                 </div>
             </div>
         </section>

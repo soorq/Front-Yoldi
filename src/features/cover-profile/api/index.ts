@@ -1,54 +1,54 @@
-import { APP_URL } from '~&/src/shared/lib/enviroments';
-import axios from 'axios';
+import { API_URL, APP_URL } from '~&/src/shared/lib/enviroments';
+import useSWRMutation from 'swr/mutation';
 
-export async function UpdateCoverProfile({
-    name,
-    slug,
-    file
-}: {
-    file: File | null;
-    name: string;
-    slug: string;
-}) {
-    try {
-        const formData = new FormData();
-        formData.append('file', file || '');
-        const res = await axios.post(
-            'https://frontend-test-api.yoldi.agency/api/image',
-            formData
-        );
-        const update = await axios.patch(`${APP_URL}/api/edit`, {
-            coverId: res.data.id,
-            name,
-            slug
-        });
+export function useUpdateCover() {
+    const { data, trigger, error } = useSWRMutation(
+        `${APP_URL}/api/edit/file`,
+        async (url, { arg }: { arg: { file: File } }) => {
+            const data = new FormData();
+            data.append('file', arg.file);
 
-        if (res.data.message) return Promise.reject(Error(res.data.message));
+            const image = await fetch(`${API_URL}/image`, {
+                method: 'POST',
+                body: data
+            }).then(res => res.json());
 
-        return res.data.url;
-    } catch (e) {
-        throw e;
-    }
+            return fetch(url, {
+                method: 'PATCH',
+                body: JSON.stringify({
+                    id: image.id,
+                    type: 'cover'
+                })
+            });
+        }
+    );
+
+    return {
+        data,
+        error,
+        trigger
+    };
 }
 
-export async function DeleteCoverProfile({
-    name,
-    slug
-}: {
-    name: string;
-    slug: string;
-}) {
-    try {
-        const update = await axios.patch(`${APP_URL}/api/edit`, {
-            coverId: null,
-            name,
-            slug
-        });
+export function useDeleteCover() {
+    const dto = {
+        coverId: null,
+        type: 'cover'
+    };
 
-        if (!update.data) return Promise.reject(Error(update.data.message));
+    const { data, trigger, error } = useSWRMutation(
+        `${APP_URL}/api/edit/file`,
+        async url => {
+            return fetch(url, {
+                method: 'PATCH',
+                body: JSON.stringify(dto)
+            }).then(res => res.json());
+        }
+    );
 
-        return update.data;
-    } catch (e) {
-        throw e;
-    }
+    return {
+        data,
+        error,
+        trigger
+    };
 }

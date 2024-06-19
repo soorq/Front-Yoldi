@@ -5,7 +5,6 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import { RolesEnum } from '~&/src/shared/types/roles.enum';
 import type { NextAuthOptions } from 'next-auth';
 import { signIn } from '~&/src/app/api/auth.api';
-import axios from 'axios';
 
 export const authOptions = {
     secret: NEXTAUTH_SECRET,
@@ -36,24 +35,27 @@ export const authOptions = {
                 try {
                     const token = await signIn(cred);
 
+                    console.log(token);
+
                     if (!token) {
                         return null;
                     }
 
-                    const user = await axios.get<IResponseUser>(
+                    const user = await fetch(
                         `https://frontend-test-api.yoldi.agency/api/profile`,
                         {
+                            method: 'GET',
                             headers: {
                                 'x-api-key': token
                             }
                         }
-                    );
+                    ).then(res => res.json());
 
                     // Тут апи кей, в виде токена, передаю на id, чтоб по типам не ругался
                     return {
-                        id: token,
-                        ...user.data,
-                        role: RolesEnum.OWNER
+                        ...user,
+                        role: RolesEnum.OWNER,
+                        id: token
                     };
                 } catch (e) {
                     return null;
@@ -64,8 +66,6 @@ export const authOptions = {
     callbacks: {
         async jwt({ user, token }) {
             if (user) {
-                token._api_key = user.id;
-                token.role = user.role as RolesEnum;
                 token.user = user as IResponseUser;
             }
 
@@ -73,8 +73,6 @@ export const authOptions = {
         },
         async session({ session, token }) {
             if (session) {
-                session._api_key = token._api_key;
-                session.role = token.role;
                 session.user = token.user;
             }
             return session;

@@ -14,14 +14,12 @@ declare module 'next-auth/jwt' {
 declare module 'next-auth' {
     interface DefaultUser extends IResponseUser {}
 
-    interface User extends Omit<DefaultUser, 'id'> {
+    interface User extends DefaultUser {
         image: IResponseUser['image'];
         role?: RolesEnum;
     }
 
     interface Session {
-        user: Omit<User, 'id'>;
-        _api_key: string;
-        role: RolesEnum;
+        user: User;
     }
 }

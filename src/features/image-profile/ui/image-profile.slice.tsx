@@ -4,16 +4,14 @@ import { ImageProfileAdd } from '~&/src/features/image-profile/ui/image-profile_
 import { Avatar, AvatarFallback, AvatarImage } from '~&/src/shared/ui/avatar';
 import type { IResponseUser } from '~&/src/shared/types/User.interface';
 import type { VariantProps } from 'class-variance-authority';
-import { RolesEnum } from '~&/src/shared/types/roles.enum';
 import { cn } from '~&/src/shared/lib/utils';
+import type { User } from 'next-auth';
 
 export function ImageProfile({
     size,
-    user,
-    role = RolesEnum.GUEST
+    user
 }: {
-    user: IResponseUser | null;
-    role: RolesEnum | undefined;
+    user: IResponseUser | User;
     size: VariantProps<typeof ImageProfileVariants>['size'];
 }) {
     return (
@@ -25,7 +23,7 @@ export function ImageProfile({
             />
             <AvatarFallback>{user?.name ? user.name[0] : ''}</AvatarFallback>
 
-            {size === 'lg' && role === 'owner' && (
+            {size === 'lg' && user?.role === 'owner' && (
                 <div className="absolute group-hover:top-0 group-hover:left-0 w-full h-full flex justify-center items-center">
                     {user?.image?.url ? (
                         <ImageProfileDelete />

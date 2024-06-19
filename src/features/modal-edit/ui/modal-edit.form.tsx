@@ -1,14 +1,16 @@
 'use client';
 
 import { type SubmitHandler, useForm } from 'react-hook-form';
-import { UpdateUser } from '~&/src/features/modal-edit/api';
+import { useUpdateUser } from '~&/src/features/modal-edit/api';
 import {
     SchemaModalForm,
     type TypeInferSchemaModalForm
 } from '~&/src/features/modal-edit/model/schema.form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Textarea } from '~&/src/shared/ui/textarea';
+import { toast } from '~&/src/shared/ui/use-toast';
 import { Input } from '~&/src/shared/ui/input';
+import { useSession } from 'next-auth/react';
 import {
     Form,
     FormControl,
@@ -16,42 +18,42 @@ import {
     FormItem,
     FormLabel
 } from '~&/src/shared/ui/form';
-import { toast } from '~&/src/shared/ui/use-toast';
-import { useSession } from 'next-auth/react';
+import { Button } from '~&/src/shared/ui/button';
 
 export function ModalForm({
-    btnClose,
-    btnSubmit
+    isOpen,
+    onSwitchOpen
 }: {
-    btnClose: React.ReactNode;
-    btnSubmit: React.ReactNode;
+    isOpen: boolean;
+    onSwitchOpen: (open: boolean) => void;
 }) {
+    const { data: updated, trigger, error } = useUpdateUser();
     const session = useSession();
 
     const form = useForm<TypeInferSchemaModalForm>({
         resolver: zodResolver(SchemaModalForm),
         defaultValues: {
-            url: session?.data?.user?.slug || '',
-            name: session?.data?.user?.name || '',
-            description: session?.data?.user?.description || ''
+            url: session?.data?.user.slug || '',
+            name: session?.data?.user.name || '',
+            description: session?.data?.user.description || ''
         }
     });
 
     const handler: SubmitHandler<TypeInferSchemaModalForm> = async data => {
         try {
-            await UpdateUser({
-                slug: session?.data?.user?.slug || '',
-                ...data
+            await trigger({
+                dto: { ...data, slug: data.url }
             });
-            await session?.update();
+
+            await session?.update({ user: { ...updated } });
+
             toast({
                 title: 'Успешно обновлено'
             });
         } catch (e) {
-            const err = e as { message: string };
             toast({
                 title: 'Ошибка!',
-                description: err.message
+                description: error.message
             });
         }
     };
@@ -118,8 +120,22 @@ export function ModalForm({
                     />
                 </div>
                 <div className="flex gap-2.5 items-center">
-                    {btnClose}
-                    {btnSubmit}
+                    <Button
+                        type="submit"
+                        onClick={() => onSwitchOpen(!isOpen)}
+                        className="py-3 text-base leading-[160%] h-auto font-normal w-full"
+                    >
+                        Сохранить
+                    </Button>
+
+                    <Button
+                        type="button"
+                        variant="outline"
+                        onClick={() => onSwitchOpen(!isOpen)}
+                        className="py-3 text-base leading-[160%] h-auto font-normal w-full"
+                    >
+                        Отмена
+                    </Button>
                 </div>
             </form>
         </Form>

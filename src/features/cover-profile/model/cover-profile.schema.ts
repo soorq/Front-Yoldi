@@ -20,7 +20,6 @@ export const CoverProfileSchema = z.object({
             file => ACCEPTED_IMAGE_TYPES.includes(file.type),
             'Поддерживаемые форматы: *.png, *.jpg, *.jpeg, *.webp '
         )
-        .nullable()
 });
 
 export type TypeInferCoverSchema = z.infer<typeof CoverProfileSchema>;

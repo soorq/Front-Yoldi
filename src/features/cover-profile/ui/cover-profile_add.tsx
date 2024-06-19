@@ -1,15 +1,16 @@
+'use client';
+
 import {
     CoverProfileSchema,
     type TypeInferCoverSchema
 } from '~&/src/features/cover-profile/model/cover-profile.schema';
 import { Form, FormField, FormItem, FormLabel } from '~&/src/shared/ui/form';
-import { UpdateCoverProfile } from '~&/src/features/cover-profile/api';
+import { useUpdateCover } from '~&/src/features/cover-profile/api';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from '~&/src/shared/ui/use-toast';
 import { Input } from '~&/src/shared/ui/input';
 import { Image, Upload } from 'lucide-react';
-import type { AxiosError } from 'axios';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
 
@@ -23,45 +24,31 @@ const CoverProfileModal = dynamic(
     }
 );
 
-export function CoverProfileAdd({
-    slug,
-    name
-}: {
-    name: string;
-    slug: string;
-}) {
+export function CoverProfileAdd() {
     const [isOpenModal, setIsOpenModal] = useState(false);
+    const { error, data, trigger } = useUpdateCover();
 
     const form = useForm<TypeInferCoverSchema>({
-        resolver: zodResolver(CoverProfileSchema),
-        defaultValues: {
-            file: null
-        }
+        resolver: zodResolver(CoverProfileSchema)
     });
-
-    const handlerSwitch = () => setIsOpenModal(prev => !prev);
 
     const handler: SubmitHandler<TypeInferCoverSchema> = async data => {
         try {
-            await UpdateCoverProfile({
-                file: data?.file,
-                name,
-                slug
-            });
-
+            await trigger({ file: data.file });
             toast({
                 variant: 'default',
                 title: 'Успешно обновлено!',
                 description: 'Ваше превью профиля успешно обновлено!'
             });
+
+            form.reset();
         } catch (e) {
-            const err: AxiosError = e as unknown as AxiosError;
             toast({
                 variant: 'destructive',
                 title: 'Ошибка!',
-                description: err.message
+                description: error.message
             });
-        } finally {
+
             form.reset();
         }
     };
@@ -100,7 +87,7 @@ export function CoverProfileAdd({
 
                 <CoverProfileModal
                     isOpen={isOpenModal}
-                    onOpenChange={handlerSwitch}
+                    onOpenChange={setIsOpenModal}
                 />
             </form>
         </Form>

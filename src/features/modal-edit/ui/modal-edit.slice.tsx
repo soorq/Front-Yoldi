@@ -1,3 +1,5 @@
+'use client';
+
 import { ModalForm } from '~&/src/features/modal-edit/ui/modal-edit.form';
 import { Button } from '~&/src/shared/ui/button';
 import { Pencil } from 'lucide-react';
@@ -8,16 +10,12 @@ import {
     DialogTitle,
     Dialog
 } from '~&/src/shared/ui/dialog';
+import { useState } from 'react';
 
-export function ModalEditSlice({
-    isOpen,
-    onSwitchOpen
-}: {
-    isOpen: boolean;
-    onSwitchOpen: (open: boolean) => void;
-}) {
+export function ModalEditSlice() {
+    const [isOpen, setIsOpen] = useState(false);
     return (
-        <Dialog onOpenChange={onSwitchOpen} open={isOpen}>
+        <Dialog onOpenChange={setIsOpen} open={isOpen}>
             <DialogTrigger asChild>
                 <Button
                     className="gap-2.5 px-[22px] py-[7px] text-base leading-[160%] w-fit font-medium"
@@ -32,27 +30,8 @@ export function ModalEditSlice({
                     <DialogTitle className="text-3xl md:leading-[250%] text-left leading-normal mb-[25px]">
                         Редактировать профиль
                     </DialogTitle>
-                    <ModalForm
-                        btnSubmit={
-                            <Button
-                                onClick={() => onSwitchOpen(!isOpen)}
-                                type="submit"
-                                className="py-3 text-base leading-[160%] h-auto font-normal w-full"
-                            >
-                                Сохранить
-                            </Button>
-                        }
-                        btnClose={
-                            <Button
-                                onClick={() => onSwitchOpen(!isOpen)}
-                                type="button"
-                                variant="outline"
-                                className="py-3 text-base leading-[160%] h-auto font-normal w-full"
-                            >
-                                Отмена
-                            </Button>
-                        }
-                    />
+
+                    <ModalForm isOpen={isOpen} onSwitchOpen={setIsOpen} />
                 </DialogHeader>
             </DialogContent>
         </Dialog>

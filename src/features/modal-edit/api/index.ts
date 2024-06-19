@@ -1,16 +1,17 @@
-import type { IResponseAuth } from '~&/src/app/models/IResponseAuth.interface';
 import type { TypeUpdateTypeDto } from '~&/src/features/modal-edit/model/update-type.dto';
-import axios from 'axios';
+import { APP_URL } from '~&/src/shared/lib/enviroments';
+import useSWRMutation from 'swr/mutation';
 
-export async function UpdateUser(dto: TypeUpdateTypeDto) {
-    try {
-        const res = await axios.patch<IResponseAuth>(
-            'http://localhost:3000/api/edit',
-            dto
-        );
-        if (res.data.message) return Promise.reject(Error(res.data.message));
-        return res;
-    } catch (e) {
-        throw e;
-    }
+export function useUpdateUser() {
+    const { data, trigger, error } = useSWRMutation(
+        `${APP_URL}/api/edit`,
+        async (url, { arg }: { arg: { dto: TypeUpdateTypeDto } }) => {
+            return fetch(url, {
+                method: 'PATCH',
+                body: JSON.stringify(arg.dto)
+            }).then(res => res.json());
+        }
+    );
+
+    return { data, error, trigger };
 }

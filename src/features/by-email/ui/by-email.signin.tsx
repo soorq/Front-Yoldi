@@ -1,12 +1,5 @@
 'use client';
 
-import {
-    FormControl,
-    Form,
-    FormField,
-    FormItem,
-    FormMessage
-} from '~&/src/shared/ui/form';
 import { Card, CardContent, CardHeader } from '~&/src/shared/ui/card';
 import { PasswordInput } from '~&/src/shared/ui/password-input';
 import { type SubmitHandler, useForm } from 'react-hook-form';
@@ -22,10 +15,18 @@ import { Input } from '~&/src/shared/ui/input';
 import { redirect } from 'next/navigation';
 import { Lock, Mail } from 'lucide-react';
 import { useEffect } from 'react';
+import {
+    FormControl,
+    Form,
+    FormField,
+    FormItem,
+    FormMessage
+} from '~&/src/shared/ui/form';
 
 export function FormSingIn() {
     const form = useForm<TypeInferSignIn>({
         resolver: zodResolver(FormSignInSchema),
+        mode: 'onChange',
         defaultValues: {
             email: '',
             password: ''
@@ -92,17 +93,22 @@ export function FormSingIn() {
                                 name="email"
                                 control={form.control}
                                 render={({ field }) => (
-                                    <FormItem className="flex gap-2.5 py-3 border-input border h-auto shadow-sm items-center space-0 rounded-md px-5">
-                                        <Mail className="shrink-0" size={20} />
-                                        <FormControl>
-                                            <Input
-                                                className="placeholder:text-base p-0 h-6 placeholder:leading-[25.6px] px-0.5 placeholder:font-normal"
-                                                placeholder="E-mail"
-                                                {...field}
+                                    <div className="flex flex-col">
+                                        <FormItem className="flex gap-2.5 py-3 border-input border h-auto shadow-sm items-center space-0 rounded-md px-5">
+                                            <Mail
+                                                className="shrink-0"
+                                                size={20}
                                             />
-                                        </FormControl>
+                                            <FormControl>
+                                                <Input
+                                                    className="placeholder:text-base p-0 h-6 placeholder:leading-[25.6px] px-0.5 placeholder:font-normal"
+                                                    placeholder="E-mail"
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                        </FormItem>
                                         <FormMessage />
-                                    </FormItem>
+                                    </div>
                                 )}
                             />
 
@@ -110,17 +116,22 @@ export function FormSingIn() {
                                 name="password"
                                 control={form.control}
                                 render={({ field }) => (
-                                    <FormItem className="flex gap-2.5 py-3 border-input border h-auto shadow-sm items-center space-0 rounded-md px-5">
-                                        <Lock className="shrink-0" size={20} />
-                                        <FormControl>
-                                            <PasswordInput
-                                                className="placeholder:text-base placeholder:pl-0.5 p-0 h-6 placeholder:leading-[25.6px] w-full px-0.5"
-                                                placeholder="Пароль"
-                                                {...field}
+                                    <div className="flex flex-col">
+                                        <FormItem className="flex gap-2.5 py-3 border-input border h-auto shadow-sm items-center space-0 rounded-md px-5">
+                                            <Lock
+                                                className="shrink-0"
+                                                size={20}
                                             />
-                                        </FormControl>
+                                            <FormControl>
+                                                <PasswordInput
+                                                    className="placeholder:text-base placeholder:pl-0.5 p-0 h-6 placeholder:leading-[25.6px] w-full px-0.5"
+                                                    placeholder="Пароль"
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                        </FormItem>
                                         <FormMessage />
-                                    </FormItem>
+                                    </div>
                                 )}
                             />
                         </div>

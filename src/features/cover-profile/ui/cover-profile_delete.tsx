@@ -1,8 +1,8 @@
-import { DeleteCoverProfile } from '~&/src/features/cover-profile/api';
+'use client';
+import { useDeleteCover } from '~&/src/features/cover-profile/api';
 import { toast } from '~&/src/shared/ui/use-toast';
 import { Button } from '~&/src/shared/ui/button';
 import { Image, Trash } from 'lucide-react';
-import type { AxiosError } from 'axios';
 import {
     Dialog,
     DialogContent,
@@ -12,31 +12,25 @@ import {
 } from '~&/src/shared/ui/dialog';
 import { useState } from 'react';
 
-export function CoverProfileDelete({
-    name,
-    slug
-}: {
-    name: string;
-    slug: string;
-}) {
+export function CoverProfileDelete() {
     const [open, setOpen] = useState(false);
+    const { error, trigger, data } = useDeleteCover();
 
     const handler = async () => {
         try {
-            await DeleteCoverProfile({ name, slug });
+            await trigger();
             toast({
                 variant: 'default',
                 title: 'Успешно обновлено!',
                 description: 'Ваше превью профиля успешно обновлено!'
             });
+            setOpen(false);
         } catch (e) {
-            const err: AxiosError = e as unknown as AxiosError;
             toast({
                 variant: 'destructive',
                 title: 'Ошибка!',
-                description: err.message
+                description: error.message
             });
-        } finally {
             setOpen(false);
         }
     };

@@ -9,21 +9,36 @@ async function handler(req: NextRequest) {
         const session = await getServerSession(authOptions);
 
         // Получаем дату, переданную, для редактирования
-        const data = await req.json();
+        const reqData = await req.json();
+
+        const dto = Object.assign(
+            {
+                name: session?.user.name
+            },
+            reqData.type === 'cover'
+                ? { coverId: reqData.id ?? null }
+                : { imageId: reqData.id ?? null },
+            {
+                slug: session?.user.slug
+            }
+        );
 
         const res = await fetch(`${API_URL}/profile`, {
             method: 'PATCH',
             headers: {
                 'x-api-key': session?.user.id ?? ''
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(dto)
         }).then(res => res.json());
 
-        if (!res) return Promise.reject(res.statusText);
+        if (res?.message) return Promise.reject(res.message);
 
         return NextResponse.json({ ...res.data });
     } catch (e) {
-        return NextResponse.json({ message: e }, { status: 400 });
+        return NextResponse.json(
+            {},
+            { status: 400, statusText: 'Bad Request' }
+        );
     }
 }
 

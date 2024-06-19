@@ -11,7 +11,7 @@ export function CoverProfileModal({
     onOpenChange
 }: {
     isOpen: boolean;
-    onOpenChange: () => void;
+    onOpenChange: (open: boolean) => void;
 }) {
     return (
         <Dialog open={isOpen} onOpenChange={onOpenChange}>
@@ -27,7 +27,7 @@ export function CoverProfileModal({
                         type="submit"
                         className="w-full"
                         form="cover-profile-form"
-                        onClick={() => onOpenChange()}
+                        onClick={() => onOpenChange(!isOpen)}
                     >
                         Подтвердить
                     </Button>

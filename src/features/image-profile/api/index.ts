@@ -1,50 +1,54 @@
-import { APP_URL } from '~&/src/shared/lib/enviroments';
-import axios from 'axios';
+import { API_URL, APP_URL } from '~&/src/shared/lib/enviroments';
+import useSWRMutation from 'swr/mutation';
 
-export async function UpdateImageProfile({
-    file,
-    slug,
-    name
-}: {
-    file: File | null;
-    name: string;
-    slug: string;
-}) {
-    try {
-        const formData = new FormData();
-        formData.append('file', file || '');
-        const res = await axios.post(
-            'https://frontend-test-api.yoldi.agency/api/image',
-            formData
-        );
-        const update = await axios.patch(`${APP_URL}/api/edit`, {
-            imageId: res.data.id,
-            name,
-            slug
-        });
-        if (res.data.message) return Promise.reject(Error(res.data.message));
-        return res.data.url;
-    } catch (e) {
-        throw e;
-    }
+export function useUpdateImage() {
+    const { data, trigger, error } = useSWRMutation(
+        `${APP_URL}/api/edit/file`,
+        async (url, { arg }: { arg: { file: File } }) => {
+            const data = new FormData();
+            data.append('file', arg.file);
+
+            const image = await fetch(`${API_URL}/image`, {
+                method: 'POST',
+                body: data
+            }).then(res => res.json());
+
+            return fetch(url, {
+                method: 'PATCH',
+                body: JSON.stringify({
+                    id: image.id,
+                    type: 'image'
+                })
+            });
+        }
+    );
+
+    return {
+        data,
+        error,
+        trigger
+    };
 }
 
-export async function DeleteImageProfile({
-    name,
-    slug
-}: {
-    name: string;
-    slug: string;
-}) {
-    try {
-        const update = await axios.patch(`${APP_URL}/api/edit`, {
-            imageId: null,
-            name,
-            slug
-        });
-        if (!update.data) return Promise.reject(Error(update.data.message));
-        return update.data;
-    } catch (e) {
-        throw e;
-    }
+export function useDeleteImage() {
+    const dto = {
+        id: null,
+        type: 'image'
+    };
+
+    const { data, trigger, error } = useSWRMutation(
+        `${APP_URL}/api/edit/file`,
+        async url => {
+            return fetch(url, {
+                method: 'PATCH',
+                body: JSON.stringify(dto)
+            }).then(res => res.json());
+        }
+    );
+
+    return {
+        data,
+        error,
+        trigger
+    };
 }

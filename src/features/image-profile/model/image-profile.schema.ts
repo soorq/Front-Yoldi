@@ -20,7 +20,6 @@ export const ImageProfileSchema = z.object({
             file => ACCEPTED_IMAGE_TYPES.includes(file.type),
             'Поддерживаемые форматы: *.png, *.jpg, *.jpeg, *.webp '
         )
-        .nullable()
 });
 
 export type TypeInferImageSchema = z.infer<typeof ImageProfileSchema>;

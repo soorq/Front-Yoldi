@@ -17,7 +17,7 @@ const widthSkeleton = [
     'w-3/12'
 ];
 
-export function ListUsers({ data }: { data: IResponseUser[] | null }) {
+export function ListUsers({ data }: { data: IResponseUser[] | [] }) {
     const memoizedData = React.useMemo(() => {
         return data
             ? data.map((user, i) => (

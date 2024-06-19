@@ -31,21 +31,17 @@ export function Header() {
                     </p>
                 </div>
 
-                {session?.data?.user ? (
+                {session.data?.user ? (
                     <div className="flex items-center gap-5 shrink-0">
                         <p className="text-base w-auto leading-[160%] font-normal">
-                            {session?.data?.user.name}
+                            {session.data.user.name}
                         </p>
                         <Link
-                            href={`/account/${session?.data?.user.slug}`}
+                            href={`/account/${session.data.user.slug}`}
                             className="w-full h-full"
                         >
                             <ImageProfile
-                                role={session?.data?.role}
-                                user={
-                                    (session?.data?.user as IResponseUser) ||
-                                    null
-                                }
+                                user={session.data.user as IResponseUser}
                                 size="sm"
                             />
                         </Link>

@@ -1,10 +1,9 @@
 'use client';
 
-import { DeleteImageProfile } from '~&/src/features/image-profile/api';
+import { useDeleteImage } from '~&/src/features/image-profile/api';
 import { toast } from '~&/src/shared/ui/use-toast';
 import { Button } from '~&/src/shared/ui/button';
 import { useSession } from 'next-auth/react';
-import type { AxiosError } from 'axios';
 import { Trash } from 'lucide-react';
 import {
     Dialog,
@@ -17,31 +16,27 @@ import { useState } from 'react';
 
 export function ImageProfileDelete() {
     const [open, setOpen] = useState(false);
-
+    const { trigger, data, error } = useDeleteImage();
     const session = useSession();
 
     const handler = async () => {
         try {
-            await DeleteImageProfile({
-                name: session?.data?.user.name || '',
-                slug: session?.data?.user.slug || ''
-            });
+            await trigger();
 
             toast({
                 variant: 'default',
                 title: 'Успешно обновлено!',
                 description: 'Ваше превью профиля успешно обновлено!'
             });
+            await session.update({ ...data });
         } catch (e) {
-            const err: AxiosError = e as unknown as AxiosError;
             toast({
                 variant: 'destructive',
                 title: 'Ошибка!',
-                description: err.message
+                description: error.message
             });
         } finally {
             setOpen(false);
-            await session.update();
         }
     };
 

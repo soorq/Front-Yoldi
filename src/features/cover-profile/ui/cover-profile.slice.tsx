@@ -1,50 +1,33 @@
-'use client';
-
 import { CoverProfileDelete } from '~&/src/features/cover-profile/ui/cover-profile_delete';
 import { CoverProfileAdd } from '~&/src/features/cover-profile/ui/cover-profile_add';
 import type { IResponseUser } from '~&/src/shared/types/User.interface';
-import { useSession } from 'next-auth/react';
+import type { User } from 'next-auth';
 import Image from 'next/image';
 
-export function Banner({
-    image,
-    slug
-}: {
-    image: IResponseUser['cover'];
-    slug: string;
-}) {
-    const session = useSession();
-
+export function Banner({ user }: { user: IResponseUser | User }) {
     return (
         <section className="w-full h-full max-h-[200px] border-b bg-background-secondary border-stroke-secondary">
             <div className="w-full h-full relative group">
-                {image?.url && (
+                {user?.cover && (
                     <Image
-                        alt={`CoverProfile-${image?.id}`}
+                        alt={`CoverProfile-${user.cover.id}`}
                         className="object-cover aspect-video"
                         loading="lazy"
                         sizes="100%"
-                        src={image?.url}
+                        src={user.cover.url}
                         fill
                     />
                 )}
 
-                {session?.data?.user?.slug === slug &&
-                    session?.data?.role === 'owner' && (
-                        <div className="group-hover:absolute group-hover:top-0 group-hover:left-0 group-hover:opacity-100 opacity-0 w-full h-full flex justify-center items-center transition-opacity">
-                            {image?.url ? (
-                                <CoverProfileDelete
-                                    slug={session?.data?.user?.slug}
-                                    name={session?.data?.user?.name || ''}
-                                />
-                            ) : (
-                                <CoverProfileAdd
-                                    slug={session?.data?.user?.slug}
-                                    name={session?.data?.user?.name || ''}
-                                />
-                            )}
-                        </div>
-                    )}
+                {user && user.role === 'owner' && (
+                    <div className="group-hover:absolute group-hover:top-0 group-hover:left-0 group-hover:opacity-100 opacity-0 w-full h-full flex justify-center items-center transition-opacity">
+                        {user?.cover ? (
+                            <CoverProfileDelete />
+                        ) : (
+                            <CoverProfileAdd />
+                        )}
+                    </div>
+                )}
             </div>
         </section>
     );

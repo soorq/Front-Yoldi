@@ -5,13 +5,12 @@ import {
     ImageProfileSchema
 } from '~&/src/features/image-profile/model/image-profile.schema';
 import { Form, FormField, FormItem, FormMessage } from '~&/src/shared/ui/form';
-import { UpdateImageProfile } from '~&/src/features/image-profile/api';
+import { useUpdateImage } from '~&/src/features/image-profile/api';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from '~&/src/shared/ui/use-toast';
 import { Input } from '~&/src/shared/ui/input';
 import { useSession } from 'next-auth/react';
-import type { AxiosError } from 'axios';
 import { Camera } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
@@ -28,38 +27,33 @@ const ImageProfileModal = dynamic(
 
 export function ImageProfileAdd() {
     const [isOpenModal, setIsOpenModal] = useState(false);
-
     const session = useSession();
+    const { error, trigger, data } = useUpdateImage();
 
     const form = useForm<TypeInferImageSchema>({
-        resolver: zodResolver(ImageProfileSchema),
-        defaultValues: {
-            file: null
-        }
+        resolver: zodResolver(ImageProfileSchema)
     });
 
     const handler: SubmitHandler<TypeInferImageSchema> = async data => {
         try {
-            await UpdateImageProfile({
-                name: session?.data?.user?.name || '',
-                slug: session?.data?.user?.slug || '',
-                file: data?.file
-            });
+            await trigger({ file: data.file });
 
             toast({
                 variant: 'default',
                 title: 'Успешно обновлено!',
                 description: 'Ваше превью профиля успешно обновлено!'
             });
+
+            await session.update({ ...data });
+
+            form.reset();
         } catch (e) {
-            const err: AxiosError = e as unknown as AxiosError;
             toast({
                 variant: 'destructive',
                 title: 'Ошибка!',
-                description: err.message || form.formState.errors.file?.message
+                description:
+                    error.message || form.formState.errors.file?.message
             });
-        } finally {
-            await session.update();
             form.reset();
         }
     };
