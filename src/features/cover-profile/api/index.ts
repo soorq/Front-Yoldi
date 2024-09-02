@@ -1,14 +1,14 @@
-import { API_URL, APP_URL } from '~&/src/shared/lib/enviroments';
+import { env } from '~&/src/shared/lib/enviroments';
 import useSWRMutation from 'swr/mutation';
 
 export function useUpdateCover() {
     const { data, trigger, error } = useSWRMutation(
-        `${APP_URL}/api/edit/file`,
+        `${env.APP_URL}/api/edit/file`,
         async (url, { arg }: { arg: { file: File } }) => {
             const data = new FormData();
             data.append('file', arg.file);
 
-            const image = await fetch(`${API_URL}/image`, {
+            const image = await fetch(`${env.API_URL}/image`, {
                 method: 'POST',
                 body: data
             }).then(res => res.json());
@@ -37,7 +37,7 @@ export function useDeleteCover() {
     };
 
     const { data, trigger, error } = useSWRMutation(
-        `${APP_URL}/api/edit/file`,
+        `${env.APP_URL}/api/edit/file`,
         async url => {
             return fetch(url, {
                 method: 'PATCH',

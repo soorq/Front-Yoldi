@@ -1,7 +1,7 @@
 import type { IResponseAuth } from '~&/src/app/models/IResponseAuth.interface';
 import { FormSignUpSchema } from '~&/src/features/by-email/model/signup.schema';
 import { type NextRequest, NextResponse } from 'next/server';
-import { API_URL } from '~&/src/shared/lib/enviroments';
+import { env } from '~&/src/shared/lib/enviroments';
 import axios, { type AxiosError } from 'axios';
 
 async function handler(req: NextRequest) {
@@ -11,7 +11,7 @@ async function handler(req: NextRequest) {
         if (!data.success) return Promise.reject(data);
 
         const res = await axios.post<IResponseAuth>(
-            `${API_URL}/auth/sign-up`,
+            `${env.API_URL}/auth/sign-up`,
             data.data,
             {
                 headers: {

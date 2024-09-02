@@ -1,10 +1,15 @@
 import type { TypeInferSignIn } from '~&/src/features/by-email/model/signin.schema';
 import type { IResponseUser } from '~&/src/shared/types/User.interface';
-import { IS_DEV, NEXTAUTH_SECRET } from '~&/src/shared/lib/enviroments';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { RolesEnum } from '~&/src/shared/types/roles.enum';
+import GitHubProvider from 'next-auth/providers/github';
 import type { NextAuthOptions } from 'next-auth';
 import { signIn } from '~&/src/app/api/auth.api';
+import {
+    GITHUB_SECRET,
+    GITHUB_ID,
+    NEXTAUTH_SECRET
+} from '~&/src/shared/lib/enviroments';
 
 export const authOptions = {
     secret: NEXTAUTH_SECRET,
@@ -18,6 +23,10 @@ export const authOptions = {
         newUser: '/register'
     },
     providers: [
+        GitHubProvider({
+            clientId: GITHUB_ID,
+            clientSecret: GITHUB_SECRET
+        }),
         CredentialsProvider({
             name: 'Credentials',
             credentials: {
@@ -34,8 +43,6 @@ export const authOptions = {
             async authorize(cred: TypeInferSignIn) {
                 try {
                     const token = await signIn(cred);
-
-                    console.log(token);
 
                     if (!token) {
                         return null;
@@ -78,5 +85,5 @@ export const authOptions = {
             return session;
         }
     },
-    debug: IS_DEV === 'development'
+    debug: process.env.NODE_ENV === 'development'
 } satisfies NextAuthOptions;

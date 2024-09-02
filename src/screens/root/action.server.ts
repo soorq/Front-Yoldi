@@ -1,10 +1,10 @@
 'use server';
 
 import type { IResponseUser } from '~&/src/shared/types/User.interface';
-import { API_URL } from '~&/src/shared/lib/enviroments';
+import { env } from '~&/src/shared/lib/enviroments';
 
 export async function getListUsers(): Promise<IResponseUser[]> {
-    return fetch(`${API_URL}/user`, {
+    return fetch(`${env.API_URL}/user`, {
         method: 'GET',
         next: {
             revalidate: 5 * 60 * 60

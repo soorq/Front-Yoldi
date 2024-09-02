@@ -1,6 +1,6 @@
 import { authOptions } from '~&/src/shared/api/next-auth.api';
 import { type NextRequest, NextResponse } from 'next/server';
-import { API_URL } from '~&/src/shared/lib/enviroments';
+import { env } from '~&/src/shared/lib/enviroments';
 import { getServerSession } from 'next-auth';
 
 async function handler(req: NextRequest) {
@@ -11,7 +11,7 @@ async function handler(req: NextRequest) {
         // Получаем дату, переданную, для редактирования
         const data = await req.json();
 
-        const res = await fetch(`${API_URL}/profile`, {
+        const res = await fetch(`${env.API_URL}/profile`, {
             method: 'PATCH',
             headers: {
                 'x-api-key': session?.user.id ?? ''

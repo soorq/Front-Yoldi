@@ -1,0 +1,169 @@
+C:\Users\karpu\OneDrive\Рабочий стол\test
+├─.env
+├─.eslintrc.json
+├─.example.env
+├─.prettierrc
+├─components.json
+├─next-env.d.ts
+├─next.config.mjs
+├─package.json
+├─postcss.config.mjs
+├─README.md
+├─tailwind.config.ts
+├─tree.txt
+├─tsconfig.json
+├─yarn.lock
+├─src
+|  ├─widgets
+|  |    ├─list-users
+|  |    |     ├─index.ts
+|  |    |     └view.tsx
+|  |    ├─header
+|  |    |   ├─index.ts
+|  |    |   └view.tsx
+|  |    ├─footer
+|  |    |   ├─index.ts
+|  |    |   └view.tsx
+|  ├─shared
+|  |   ├─ui
+|  |   | ├─avatar.tsx
+|  |   | ├─button.tsx
+|  |   | ├─card.tsx
+|  |   | ├─dialog.tsx
+|  |   | ├─form.tsx
+|  |   | ├─image-loader.tsx
+|  |   | ├─input.tsx
+|  |   | ├─label.tsx
+|  |   | ├─password-input.tsx
+|  |   | ├─skeleton.tsx
+|  |   | ├─textarea.tsx
+|  |   | ├─toast.tsx
+|  |   | ├─toaster.tsx
+|  |   | ├─tooltip.tsx
+|  |   | └use-toast.ts
+|  |   ├─types
+|  |   |   ├─next-auth.d.ts
+|  |   |   ├─roles.enum.ts
+|  |   |   └User.interface.ts
+|  |   ├─lib
+|  |   |  ├─data.ts
+|  |   |  ├─enviroments.ts
+|  |   |  └utils.ts
+|  |   ├─api
+|  |   |  ├─fetcher.api.ts
+|  |   |  └next-auth.api.ts
+|  ├─screens
+|  |    ├─root
+|  |    |  ├─action.server.ts
+|  |    |  └index.tsx
+|  |    ├─auth
+|  |    |  ├─sign-in.tsx
+|  |    |  └sign-up.tsx
+|  |    ├─account
+|  |    |    └owner.tsx
+|  ├─features
+|  |    ├─modal-edit
+|  |    |     ├─index.ts
+|  |    |     ├─ui
+|  |    |     | ├─modal-edit.form.tsx
+|  |    |     | └modal-edit.slice.tsx
+|  |    |     ├─model
+|  |    |     |   ├─schema.form.ts
+|  |    |     |   └update-type.dto.ts
+|  |    |     ├─api
+|  |    |     |  └index.ts
+|  |    ├─image-profile
+|  |    |       ├─index.ts
+|  |    |       ├─ui
+|  |    |       | ├─image-profile.modal.tsx
+|  |    |       | ├─image-profile.slice.tsx
+|  |    |       | ├─image-profile_add.tsx
+|  |    |       | └image-profile_delete.tsx
+|  |    |       ├─model
+|  |    |       |   ├─image-profile.schema.ts
+|  |    |       |   └image-profile.variants.ts
+|  |    |       ├─api
+|  |    |       |  └index.ts
+|  |    ├─cover-profile
+|  |    |       ├─index.ts
+|  |    |       ├─ui
+|  |    |       | ├─cover-profile.modal.tsx
+|  |    |       | ├─cover-profile.slice.tsx
+|  |    |       | ├─cover-profile_add.tsx
+|  |    |       | └cover-profile_delete.tsx
+|  |    |       ├─model
+|  |    |       |   └cover-profile.schema.ts
+|  |    |       ├─api
+|  |    |       |  └index.ts
+|  |    ├─by-email
+|  |    |    ├─index.ts
+|  |    |    ├─ui
+|  |    |    | ├─by-email.signin.tsx
+|  |    |    | └by-email.singup.tsx
+|  |    |    ├─model
+|  |    |    |   ├─signin.schema.ts
+|  |    |    |   └signup.schema.ts
+|  ├─entities
+|  |    ├─viewer
+|  |    |   ├─index.ts
+|  |    |   ├─ui
+|  |    |   | └viewer.user.tsx
+|  ├─app
+|  |  ├─providers
+|  |  |     ├─app.provider.tsx
+|  |  |     ├─nextauth.provider.tsx
+|  |  |     └swr.provider.tsx
+|  |  ├─models
+|  |  |   ├─IResponseAuth.interface.ts
+|  |  |   └update-dto.dto.ts
+|  |  ├─api
+|  |  |  └auth.api.ts
+├─public
+|   ├─other
+|   ├─meta
+|   |  ├─android-chrome-192x192.png
+|   |  ├─android-chrome-512x512.png
+|   |  ├─apple-touch-icon.png
+|   |  ├─favicon-16x16.png
+|   |  ├─favicon-32x32.png
+|   |  ├─favicon.ico
+|   |  ├─og.png
+|   |  └site.webmanifest
+|   ├─logo
+|   |  └main.png
+├─app
+|  ├─favicon.ico
+|  ├─globals.css
+|  ├─layout.tsx
+|  ├─loading.tsx
+|  ├─page.tsx
+|  ├─api
+|  |  ├─register
+|  |  |    └route.ts
+|  |  ├─edit
+|  |  |  ├─route.ts
+|  |  |  ├─file
+|  |  |  |  └route.ts
+|  |  ├─auth
+|  ├─account
+|  |    ├─page.tsx
+|  |    ├─[slug]
+|  |    |   └page.tsx
+|  ├─(auth)
+|  |   ├─register
+|  |   |    └page.tsx
+|  |   ├─login
+|  |   |   └page.tsx
+├─.idea
+|   ├─material_theme_project_new.xml
+|   ├─modules.xml
+|   ├─test.iml
+|   ├─vcs.xml
+|   ├─workspace.xml
+|   ├─jsLinters
+|   |     └eslint.xml
+|   ├─inspectionProfiles
+|   |         └Project_Default.xml
+|   ├─codeStyles
+|   |     ├─codeStyleConfig.xml
+|   |     └Project.xml

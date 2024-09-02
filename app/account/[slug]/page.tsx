@@ -1,6 +1,6 @@
 import type { IResponseUser } from '~&/src/shared/types/User.interface';
-import { default as Page } from '~&/src/screens/account/owner';
 import { API_URL, APP_URL } from '~&/src/shared/lib/enviroments';
+import { default as Page } from '~&/src/screens/account/owner';
 import type { Metadata } from 'next';
 
 export async function generateStaticParams() {
